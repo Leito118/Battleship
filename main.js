@@ -16,9 +16,8 @@ const game = {
     collision: new Set(),
     generateShip () {
         for (let i = 0; i < this.optionShip.count.length; i++) {
-            //console.log(this.optionShip.count[i])
+
             for (let j = 0; j < this.optionShip.count[i]; j++) {
-                //console.log(this.optionShip.size[i]);
                 const size = this.optionShip.size[i];
                 const ship = this.generateOptionsShip(size);
                 this.ships.push(ship);
@@ -34,25 +33,21 @@ const game = {
 
         let directon = Math.random() < 0.5;
         let x, y;
+
         if(directon) {
-            //console.log('g');
             x = Math.floor(Math.random() * 10);
             y = Math.floor(Math.random() * (10 - shipSize));
         } else {
-            //console.log('w');
             x = Math.floor(Math.random() * (10 - shipSize));
             y = Math.floor(Math.random() * 10);
         }
-
-
-
+        
         for (let i = 0; i < shipSize; i++) {
             if (directon) {
                 ship.location.push(x + '' + (y + i));
             } else {
                 ship.location.push((x + i) + '' + y);
             }
-
             ship.hit.push('');
         }
 
@@ -76,22 +71,15 @@ const game = {
         for (let i = 0; i < location.length; i++) {
             const startCoordX = location[i][0] - 1;
 
-            //console.log(startCoordX);
-
             for (let j = startCoordX; j < startCoordX + 3; j++) {
                 const startCoordY = location[i][1] - 1;
-
-                //console.log(startCoordY);
 
                 for(let z = startCoordY; z < startCoordY + 3; z++) {
 
                     if(j >= 0 && j < 10 && z >= 0 && z < 10) {
                         const coord = j + '' + z;
                         console.log(coord);
-
-                        //if(!this.collision.includes(coord)) {
-                            this.collision.add(coord);
-                        //}
+                        this.collision.add(coord);
                     } 
                 } 
             }
@@ -99,7 +87,6 @@ const game = {
     }
 }
 
-//console.log(game.ships[0].location);
 
 const play = {
     record: localStorage.getItem('seaBattleRecord') || 0,
@@ -159,18 +146,14 @@ const fire = (e) => {
                 game.shipCount -= 1;
 
                 if(game.shipCount < 1) {
-                    header.textContent = 'Good!';
-                    /* 
-                    TODO: Добавить цвет для header
-                    */
+                    header.textContent = 'Ура! Вы выиграли';
+
                     if(play.shot < play.record || play.record === 0) {
                     localStorage.setItem('seaBattleRecord', play.shot);
-                    //console.log(localStorage.getItem('seaBattleRecord'));
+
                         play.record = play.shot;
                         play.render();
-                }
-                   // play.record = play.shot;
-                   // play.render();
+                    }
                 }
             }
         }
@@ -196,20 +179,3 @@ const init = () => {
 }
 
 init();
-
-/*
-const fale = {
-    0: true,
-    1: false
-}
-
-mas = [];
-
-pole.addEventListener('click', (e) => {
-    console.log(e.target)
-    let ec = e.target.accessKey;
-    if(ec == false) { console.log('ok')}
-    if(ec == true) {console.log('ok2')}
-    e.target.accessKey = 1;
-})
-*/
